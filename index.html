@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uplynk - Educating Hustlers. Empowering Leaders</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            background-color: #0a1f3d;
+            color: white;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        
+        /* Background Slideshow */
+        .slideshow {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+            background-color: #0a1f3d;
+        }
+        
+        .slide.active {
+            opacity: 0.3;
+        }
+        
+        /* Navigation Bar */
+        .nav-container {
+            background: linear-gradient(90deg, #add8e6, #b6e0fe);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 5%;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            height: 45px;
+            transition: transform 0.3s;
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        .nav-tabs {
+            display: flex;
+            list-style: none;
+            margin-left: auto;
+        }
+        
+        .nav-tabs li {
+            position: relative;
+            margin-left: 25px;
+        }
+        
+        .nav-tabs li a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 600;
+            padding: 8px 12px;
+            transition: all 0.3s;
+            border-radius: 4px;
+        }
+        
+        .nav-tabs li a:hover {
+            color: #0066cc;
+            background: rgba(255,255,255,0.2);
+        }
+        
+        /* Dropdown Menu */
+        .dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            min-width: 220px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .dropdown li {
+            padding: 12px 15px;
+            border-bottom: 1px solid #f1f1f1;
+            transition: background 0.2s;
+        }
+        
+        .dropdown li:hover {
+            background: #f8f9fa;
+        }
+        
+        .dropdown li:last-child {
+            border-bottom: none;
+        }
+        
+        .dropdown li a {
+            color: #333;
+            display: block;
+            font-weight: 500;
+        }
+        
+        .nav-tabs li:hover .dropdown {
+            display: block;
+        }
+        
+        /* Hero Section */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 5% 100px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 25px;
+            color: white;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            line-height: 1.2;
+            background: linear-gradient(90deg, #4fc3f7, #64b5f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient 8s ease infinite;
+            background-size: 200% 200%;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 40px;
+            max-width: 800px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(90deg, #0066cc, #004d99);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,102,204,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,102,204,0.4);
+        }
+        
+        .cta-button:active {
+            transform: translateY(1px);
+        }
+        
+        /* Owner's Message Section - Enhanced Design */
+        .owners-message {
+            background: rgba(16, 57, 104, 0.7);
+            padding: 80px 5%;
+            margin: 0 auto;
+            max-width: 1200px;
+            border-radius: 15px;
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            margin-bottom: 60px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .owners-message::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(79,195,247,0.1) 0%, rgba(16,57,104,0) 70%);
+            z-index: -1;
+            animation: pulse 15s infinite alternate;
+        }
+        
+        @keyframes pulse {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        
+        .owners-message h2 {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            color: #4fc3f7;
+            text-align: center;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .owners-message h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #4fc3f7, transparent);
+            border-radius: 3px;
+        }
+        
+        .owners-message-content {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        
+        .owners-message-text {
+            flex: 1;
+        }
+        
+        .owners-message p {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .owners-message p::before {
+            content: '»';
+            position: absolute;
+            left: 0;
+            color: #4fc3f7;
+        }
+        
+        .owners-image {
+            flex: 0 0 350px;
+            height: 350px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 5px solid rgba(255,255,255,0.1);
+            transition: transform 0.5s;
+        }
+        
+        .owners-image:hover {
+            transform: rotate(-2deg) scale(1.02);
+        }
+        
+        .owners-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .owners-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* Section Styling */
+        .section {
+            padding: 80px 5%;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            font-size: 2.8rem;
+            color: #fff;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #4fc3f7, #64b5f6);
+            border-radius: 2px;
+        }
+        
+        /* Features Section - Enhanced */
+        .features-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        
+        .feature-card {
+            background: linear-gradient(145deg, rgba(16, 57, 104, 0.7), rgba(10, 31, 61, 0.9));
+            border-radius: 15px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.4s;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #4fc3f7, #64b5f6);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 20px;
+            font-size: 1.6rem;
+            color: #4fc3f7;
+        }
+        
+        .feature-card p {
+            line-height: 1.8;
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 25px;
+            color: #4fc3f7;
+            background: rgba(79,195,247,0.1);
+            width: 80px;
+            height: 80px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: rotate(15deg) scale(1.1);
+            background: rgba(79,195,247,0.2);
+        }
+        
+        /* Vision Section - Enhanced */
+        .vision-section {
+            background: linear-gradient(135deg, rgba(7, 26, 51, 0.9), rgba(10, 31, 61, 0.9));
+            padding: 100px 5%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .vision-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(79,195,247,0.05)" d="M0,0 L100,0 L100,100 L0,100 Z" /></svg>');
+            background-size: 50px 50px;
+            opacity: 0.5;
+        }
+        
+        .vision-card {
+            background: rgba(16, 57, 104, 0.7);
+            border-radius: 15px;
+            padding: 40px;
+            height: 100%;
+            transition: all 0.4s;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .vision-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .vision-card h3 {
+            color: #4fc3f7;
+            margin-bottom: 20px;
+            font-size: 1.6rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .vision-card h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: #4fc3f7;
+            border-radius: 3px;
+        }
+        
+        .vision-card p {
+            line-height: 1.8;
+            color: rgba(255,255,255,0.9);
+        }
+        
+        .vision-icon {
+            font-size: 3rem;
+            margin-bottom: 25px;
+            color: #4fc3f7;
+            background: rgba(79,195,247,0.1);
+            width: 80px;
+            height: 80px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        
+        .vision-card:hover .vision-icon {
+            transform: rotate(15deg) scale(1.1);
+            background: rgba(79,195,247,0.2);
+        }
+        
+        /* About Page Styles */
+        .about-page {
+            background: linear-gradient(135deg, #6a5acd, #8a7fd1);
+            min-height: 100vh;
+            padding: 100px 5%;
+            color: white;
+        }
+        
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Footer - Enhanced */
+        footer {
+            background: linear-gradient(135deg, #071a33, #0a1f3d);
+            padding: 60px 5% 30px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            clip-path: polygon(0 5%, 100% 0, 100% 100%, 0% 100%);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            text-align: left;
+        }
+        
+        .footer-column h3 {
+            color: #4fc3f7;
+            margin-bottom: 25px;
+            font-size: 1.4rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: #4fc3f7;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-column ul li a {
+            color: #ccc;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+        
+        .footer-column ul li a:hover {
+            color: #4fc3f7;
+            transform: translateX(5px);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            color: white;
+            background: rgba(255,255,255,0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: #4fc3f7;
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .owners-message-content {
+                flex-direction: column;
+            }
+            
+            .owners-image {
+                margin-top: 30px;
+                flex: 0 0 300px;
+                height: 300px;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                padding: 15px 5%;
+            }
+            
+            .logo {
+                margin-bottom: 15px;
+            }
+            
+            .nav-tabs {
+                margin-left: 0;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-tabs li {
+                margin: 5px 10px;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 2.2rem;
+            }
+            
+            .features-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Background Slideshow -->
+    <div class="slideshow">
+        <div class="slide active" style="background-image: url('stock m.jpg');"></div>
+        <div class="slide" style="background-image: url('studying with ai.jpg');"></div>
+    </div>
+    
+    <!-- Navigation Bar -->
+    <div class="nav-container">
+        <img src="logo of sie.png" alt="Uplynk Logo" class="logo">
+        <ul class="nav-tabs">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li>
+                <a href="#">For Students</a>
+                <ul class="dropdown">
+                    <li><a href="#">Artificial Intelligence</a></li>
+                    <li><a href="#">Blockchain</a></li>
+                    <li><a href="#">Stock Market</a></li>
+                    <li><a href="#">Personality Development</a></li>
+                    <li><a href="#">Emotional Intelligence</a></li>
+                    <li><a href="#">Entrepreneurship</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">For Teachers</a>
+                <ul class="dropdown">
+                    <li><a href="#">Interactive Workshops</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">For Schools</a>
+                <ul class="dropdown">
+                    <li><a href="#">Contact for Collaboration</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    
+    <!-- Main Content (Home Page) -->
+    <div id="home-content">
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>EDUCATING HUSTLERS. EMPOWERING LEADERS</h1>
+            <p>Transformative education for the next generation of innovators and leaders</p>
+            <a href="#" class="cta-button">Get Started</a>
+        </section>
+        
+        <!-- Owner's Message Section - Enhanced with Image -->
+        <section class="owners-message">
+            <h2>Owner's Message</h2>
+            <div class="owners-message-content">
+                <div class="owners-message-text">
+                    <p>At Uplynk, we believe that true education goes beyond textbooks.</p>
+                    <p>We're building a future where every student is empowered to lead, innovate, and thrive.</p>
+                    <p>Every child deserves access to meaningful, modern education. We're here to break barriers, spark ideas, and empower young minds to become creators of upcoming changes.</p>
+                    <p>By unlocking potential in every corner of the country, we're making a lasting impact.</p>
+                    <p>The journey starts here—and it starts with equal access to opportunities for all.</p>
+                </div>
+                <div class="owners-image">
+                    <img src="WhatsApp Image 2025-04-22 at 11.12.03 PM.jpeg" alt="Uplynk Founder">
+                </div>
+            </div>
+        </section>
+        
+        <!-- Features Section -->
+        <section class="section">
+            <h2 class="section-title">Our Offerings</h2>
+            <div class="features-container">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h3>Cutting-Edge Curriculum</h3>
+                    <p>Our programs are designed to equip students with skills for the future economy, focusing on emerging technologies and leadership development through hands-on projects.</p>
+                    <div style="margin-top: 20px;">
+                        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Coding Class" style="width:100%; border-radius:8px; margin-top:15px;">
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h3>Expert Instructors</h3>
+                    <p>Learn from industry professionals with real-world experience who are passionate about mentoring the next generation of leaders through personalized guidance.</p>
+                    <div style="margin-top: 20px;">
+                        <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Expert Teachers" style="width:100%; border-radius:8px; margin-top:15px;">
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3>Practical Learning</h3>
+                    <p>Hands-on projects and real-world challenges that prepare students for entrepreneurial and professional success in today's competitive landscape.</p>
+                    <div style="margin-top: 20px;">
+                        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Practical Workshop" style="width:100%; border-radius:8px; margin-top:15px;">
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Vision Section -->
+        <section class="section vision-section">
+            <h2 class="section-title">Our Vision</h2>
+            <div class="features-container">
+                <div class="vision-card">
+                    <div class="vision-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>Collaboration with NGOs</h3>
+                    <p>We partner with non-governmental organizations to bring quality education to underserved communities, creating opportunities where they're needed most through strategic alliances.</p>
+                    <div style="margin-top: 20px;">
+                        <img src="https://images.unsplash.com/photo-1521791055366-0d553872125f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="NGO Collaboration" style="width:100%; border-radius:8px; margin-top:15px;">
+                    </div>
+                </div>
+                <div class="vision-card">
+                    <div class="vision-icon">
+                        <i class="fas fa-school"></i>
+                    </div>
+                    <h3>Targeting Rural Schools</h3>
+                    <p>Our outreach programs focus on rural educational institutions, bridging the urban-rural divide in access to quality education and resources through mobile learning centers.</p>
+                    <div style="margin-top: 20px;">
+                        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Rural School" style="width:100%; border-radius:8px; margin-top:15px;">
+                    </div>
+                </div>
+                <div class="vision-card">
+                    <div class="vision-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Our Own Business Schools</h3>
+                    <p>Establishing dedicated Uplynk Business Schools that will serve as centers of excellence for entrepreneurial education and leadership development across the nation.</p>
+                    <div style="margin-top: 20px;">
+                        <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80" alt="Business School" style="width:100%; border-radius:8px; margin-top:15px;">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- About Page Content (hidden by default) -->
+    <div id="about-content" class="about-page" style="display: none;">
+        <div class="about-container">
+            <h1 class="section-title">About Uplynk</h1>
+            <div class="features-container">
+                <div class="feature-card">
+                    <h3>Our Mission</h3>
+                    <p>To revolutionize education by combining cutting-edge technology with proven pedagogical approaches, creating leaders who can thrive in the digital economy.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Our History</h3>
+                    <p>Founded in 2020, Uplynk has grown from a small startup to a leading educational platform serving thousands of students across multiple countries.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Our Team</h3>
+                    <p>A diverse group of educators, technologists, and business leaders committed to transforming education for the 21st century.</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="index.html" class="cta-button">Back to Home</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="#">Courses</a></li>
+                    <li><a href="#">Admissions</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Programs</h3>
+                <ul>
+                    <li><a href="#">AI & Machine Learning</a></li>
+                    <li><a href="#">Blockchain Technology</a></li>
+                    <li><a href="#">Entrepreneurship</a></li>
+                    <li><a href="#">Leadership Development</a></li>
+                    <li><a href="#">Rural Education</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul>
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Education St, Learning City</li>
+                    <li><i class="fas fa-phone"></i> +1 (234) 567-8900</li>
+                    <li><i class="fas fa-envelope"></i> info@uplynk.edu</li>
+                </ul>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <p class="copyright">© 2025 Uplynk. All rights reserved. | Designed with <i class="fas fa-heart" style="color: #ff4d4d;"></i> for the future of education</p>
+    </footer>
+
+    <script>
+        // Background Slideshow Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            let currentSlide = 0;
+            
+            function nextSlide() {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }
+            
+            // Change slide every 5 seconds
+            setInterval(nextSlide, 5000);
+            
+            // Preload images
+            const images = [
+                'logo of sie.png',
+                'studying with ai.jpg',
+                'https://images.unsplash.com/photo-1580894732444-8ecded7900cd?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+                'https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+                'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+                'https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+                'https://images.unsplash.com/photo-1521791055366-0d553872125f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80',
+                'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80'
+            ];
+            
+            images.forEach(image => {
+                const img = new Image();
+                img.src = image;
+            });
+            
+            // Simple page routing for demo purposes
+            const path = window.location.pathname;
+            if (path.includes('about.html')) {
+                document.getElementById('home-content').style.display = 'none';
+                document.getElementById('about-content').style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
